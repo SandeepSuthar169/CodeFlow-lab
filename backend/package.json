@@ -1,8 +1,8 @@
 {
-  "name": "book-bazaar-backend",
+  "name": "07.-building-the-mega-backend-project",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "node src/index.js"
@@ -11,21 +11,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.13.2",
-    "bcrypt": "^6.0.0",
-    "bcryptjs": "^3.0.3",
-    "cookie-parse": "^0.4.0",
+    "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
-    "crypto-js": "^4.2.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "express-validator": "^7.3.0",
-    "i": "^0.3.7",
-    "jsonwebtoken": "^7.4.3",
-    "mongoose": "^8.19.4",
-    "npm": "^11.6.2"
+    "express-validator": "^7.2.1",
+    "ioredis": "^5.9.2",
+    "jsonwebtoken": "^9.0.2",
+    "mailgen": "^2.0.32",
+    "mongoose": "^8.19.1",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.10",
+    "nodemon": "^3.1.10",
+    "redis": "^5.10.0"
   },
   "devDependencies": {
     "prettier": "^3.6.2"

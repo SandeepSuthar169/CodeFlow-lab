@@ -1,22 +1,16 @@
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose"
-import { User } from "../models/user.model.js"
-import { ApiError } from "../utils/apiError.js"
-import { ApiResponse } from "../utils/apiResponse.js"
-import { asyncHandler } from "../utils/asyncHandler.js"
-import { authMiddleware } from "../middlewares/auth.middleware.js"
-
+import { User } from "../models/user.models.js"
+import { ApiError } from "../utils/api-error.js"
+import { ApiResponse } from "../utils/api-response.js"
+import { asyncHandler } from "../utils/async-handler.js"
+// import { verifyJWT } from "../middlewares/auth.middleware.js"
 
 
 const registerUser = asyncHandler(async (req, res) => {
         //1. get user details from fronted
 
         const {username, email, password}  = req.body
-        // console.log("username:", username, "email:", email);
-
-        // console.log(req.body);
-        
-        //2. validation- not empty
         if(
             [email, username, password].some((field) => 
                 field?.trim() === "")
@@ -26,8 +20,8 @@ const registerUser = asyncHandler(async (req, res) => {
 
         //3. check if user already exists: username, email
         const existedUser = await User.findOne({
-            $or: [{ username }, { email }] // this is mongodb aggregarion pipeline for find user base on email and username
-
+            $or: [{ username }, { email }]
+            
         })
 
         if(existedUser){
@@ -41,7 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
             password,
             username: username
         })
-        // console.log(fullName, email, password, username);
+        console.log(email, password, username);
         
         if(!user){
             throw new ApiError(404, "User is required!")
@@ -156,7 +150,15 @@ const loginUser = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,{
-             user: loggedInUser, accessToken, refreshToken 
+             user: {
+                loggedInUser, 
+                accessToken, 
+                refreshToken,
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role
+             } 
             },
         "User logged in successfully"
       )
@@ -167,7 +169,9 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const logoutUser = asyncHandler(async (req, res) => {
 
-
+    // console.log("req <====> ",req);
+    // console.log("req.user <+++++>",req.user);
+    // console.log("req.user._id  <=======>",req.user._id);
     
     await User.findByIdAndUpdate(
         req.user._id,
@@ -202,8 +206,29 @@ const logoutUser = asyncHandler(async (req, res) => {
 })
 
 
+const check = asyncHandler(async (req, res) => {
+    try {
+        res.status(200).json({
+            success: true,
+            message: "User authenticated successfully",
+            user: {
+                id: req.user._id,
+                username: req.user.username,
+                email: req.user.email,
+                role: req.user.role, 
+            }
+        });
+    } catch (error) {
+        console.error("error checking user: ", error);
+        res.status(500).json({
+            error: 'Error Checking user'
+        })
+    }
+})
+
 export {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    check
 }

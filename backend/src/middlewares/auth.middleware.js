@@ -1,14 +1,18 @@
-import jwt from "jsonwebtoken"
-import { User } from "../models/user.model.js";
-import { ApiError } from "../utils/apiError.js";
-import { ApiResponse } from "../utils/apiResponse.js"
-import { asyncHandler } from "../utils/asyncHandler.js";
-import {UserRoleEnum, AvailableUserRoles} from "../utils/constants.js"
+import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import { registerUser } from "../controllers/auth.controllers.js";
+import { User } from "../models/user.models.js"
+import { ApiError} from "../utils/api-error.js"
+import { asyncHandler } from "../utils/async-handler.js"
 
-export const authMiddleware = asyncHandler(async (req, _, next) => {   // req, res, === req, _, 
-try {
+
+
+
+
+export const verifyJWT = asyncHandler(async (req, _, next) => {   // req, res, === req, _, 
+// try {
+
+      console.log('Cookies:', req.cookies);
+      console.log('Authorization Header:', req.header("Authorization"));
       const token =  req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
     
       if(!token){
@@ -30,40 +34,52 @@ try {
       req.user = user;
       next()
 
-} catch (error) {
-    throw new ApiError(401, "Invalid access token")
-}
+// } catch (error) {
+//     throw new ApiError(401, "Invalid access token")
+// }
 })
 
+// export const validateProjectPermission = (roles = []) => 
+//     asyncHandler(async (req, res, next) => {
+//         const { projectId } = req.params
 
-export const checkAdmin = asyncHandler(async (req, res, next) => {
-  try {
+//         if(!projectId){
+//             throw new ApiError(401,  "invalid project Id ")
+//         }
 
-      const pipeline = [
-        {
-            $match: {
-                _id: new mongoose.Types.ObjectId(req.user._id)
-            }
-        },
-        {
-            $project: {
-                role: 1,
-                _id: 0
-            }
+//         const project = await ProjectMember.findOne({
+//             project: new  mongoose.Types.ObjectId(projectId),
+//             user: new mongoose.Types.ObjectId(req.user._id),
+            
+//         })
+
+//         if(!project){
+//             throw new ApiError(401, "Projeect not found ")
+//         }
+
+//         const givenRole = project?.role
+
+//         req.user.role = givenRole
+
+//         if(!roles.includes(givenRole)){
+//             throw new ApiError(403, "YOu do nor have permission to perfom this action. ")
+//         }
+
+// })
+
+export const checkAdmin = asyncHandler(async (req, res, next) => {   // req, res, === req, _, 
+    try {
+        const userId = res.user._id;
+
+        const user = await User.findOne({userId: res.user._id}).select({ role: 1 })
+
+        if(!user || user.role !== "admin"){
+            throw new ApiError(403, "Access denied - Admins only")
         }
-    ];
 
-
-    const users = await User.aggregate(pipeline);
-
-
-      if(!users || users.role !== 'ADMIN'){
-          throw new ApiError(403, 'Acess denied - Admins only')
-      }
-
-  } catch (error) {
-    console.error('Error checking admin role', error);
-    throw new ApiError(500, 'Error checking admin role')
-    
-  }
-}) 
+        next();
+    } catch (error) {
+        console.log("Error for chicking admin role", error);
+        throw new ApiError(500, "Error checking admin role");
+    }
+})

@@ -1,16 +1,11 @@
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import mongoose, { Schema } from "mongoose";
-import { AvailableUserRoles, UserRoleEnum } from "../utils/constants.js";
-
+import { type } from "os";
 
 const userSchema = new Schema(
     {
-            _id: {
-                type: String,
-                default: () => new mongoose.Types.ObjectId().toString()
-            },
             username: {
                 type: String,
                 required: true,
@@ -25,14 +20,14 @@ const userSchema = new Schema(
                 lowercase: true,
                 trim: true
             },
-            role: {
-                type: String,
-                enum: AvailableUserRoles,
-                default: UserRoleEnum.USER
-            },
             password: {
                 type: String,
                 required: true
+            },
+            role:{
+                type: String,
+                enum: ["user", "admin"],
+                default: "admin"
             },
             isEmailVerified: {
                 type: Boolean,
@@ -54,29 +49,9 @@ const userSchema = new Schema(
             emailVerificationExpiry: {
                 type: Date,
             },
-            problems: [{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Problem" 
-            }],
-            submission: [{ 
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: "Submission" 
-            }],
-            problemsSolved: [{ 
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: "ProblemSolved" 
-            }],
-            playlists: [{ 
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: "Playlist" 
-            }],
-           
         },
     {
-        timestamps: {
-            createdAt: 'createdAt',
-            updatedAt: 'updatedAt'
-        }
+        timestamps: true
     }
 )
 
@@ -96,11 +71,10 @@ userSchema.methods.generateAccessToken =  function () {
         {
             _id: this._id,
             email: this.email,
-            username: this.username,
-            role: this.role
+            username: this.username
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: process.env.ACCESS_TOKEN_EXPIRY },
+        { expiresIn: process.env.ACCESS_TOKEN_EXPRIRY },
     )
 }
 
@@ -112,11 +86,11 @@ userSchema.methods.generateRefreshToken =  function () {
             username: this.username
         },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY },
+        { expiresIn: process.env.REFRESH_TOKEN_EXPRIRY },
     )
 }
 
-userSchema.methods.generateTemporaryToken = function(){
+userSchema.methods.generateTemporyToken = function(){
     const unHashedToken = crypto.randomBytes(20).toString("hex")
 
     const hashedToken = crypto.createHash("sha256").update(unHashedToken).digest("hex")
