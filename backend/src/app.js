@@ -2,7 +2,7 @@ import cookieparser from "cookie-parser"
 import cors from "cors"
 import authRoutes from "./routes/auth.routes.js"
 import healthCheckRouters from "./routes/helthcheck.routes.js"
-
+import problemRoutes from './routes/problem.routes.js'
 
 import express from "express"
 const app = express()
@@ -25,6 +25,7 @@ app.use(express.urlencoded(
 
 app.use("/api/v1/auth", authRoutes)
 app.use("/api/v1/healthcheck", healthCheckRouters)
+app.use("/api/v1/problem", problemRoutes)
 
 
 

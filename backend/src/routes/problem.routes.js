@@ -1,0 +1,10 @@
+import express, { Router } from "express"
+
+import { checkAdmin, verifyJWT } from "../middlewares/auth.middleware.js"
+import { createProblem }  from "../controllers/problem.contoller.js"
+
+const router = Router()
+
+router.post("/create-problem", verifyJWT, checkAdmin, createProblem)
+
+export default router

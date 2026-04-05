@@ -18,6 +18,9 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {   // req, res, =
       if(!token){
         throw new ApiError(401, "Unauthorized request")
       }
+
+      // req.user = decoded;
+
     
       const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
     
@@ -39,47 +42,51 @@ export const verifyJWT = asyncHandler(async (req, _, next) => {   // req, res, =
 // }
 })
 
-// export const validateProjectPermission = (roles = []) => 
-//     asyncHandler(async (req, res, next) => {
-//         const { projectId } = req.params
-
-//         if(!projectId){
-//             throw new ApiError(401,  "invalid project Id ")
-//         }
-
-//         const project = await ProjectMember.findOne({
-//             project: new  mongoose.Types.ObjectId(projectId),
-//             user: new mongoose.Types.ObjectId(req.user._id),
-            
-//         })
-
-//         if(!project){
-//             throw new ApiError(401, "Projeect not found ")
-//         }
-
-//         const givenRole = project?.role
-
-//         req.user.role = givenRole
-
-//         if(!roles.includes(givenRole)){
-//             throw new ApiError(403, "YOu do nor have permission to perfom this action. ")
-//         }
-
-// })
 
 export const checkAdmin = asyncHandler(async (req, res, next) => {   // req, res, === req, _, 
-    try {
-        const userId = res.user._id;
-
-        const user = await User.findOne({userId: res.user._id}).select({ role: 1 })
-
-        if(!user || user.role !== "admin"){
-            throw new ApiError(403, "Access denied - Admins only")
-        }
-
-        next();
-    } catch (error) {
-        console.log("Error for chicking admin role", error);
-        throw new ApiError(500, "Error checking admin role");
+  // try {
+    // const userId = res.user._id;
+    
+    const user = await User.findById(req.user._id)
+    
+    if(!user || user.role !== "admin"){
+      throw new ApiError(403, "Access denied - Admins only")
     }
+    
+    next();
+    // } catch (error) {
+      //     console.log("Error for chicking admin role", error);
+      //     throw new ApiError(500, "Error checking admin role");
+      // }
 })
+
+
+
+
+    // export const validateProjectPermission = (roles = []) => 
+    //     asyncHandler(async (req, res, next) => {
+    //         const { projectId } = req.params
+    
+    //         if(!projectId){
+    //             throw new ApiError(401,  "invalid project Id ")
+    //         }
+    
+    //         const project = await ProjectMember.findOne({
+    //             project: new  mongoose.Types.ObjectId(projectId),
+    //             user: new mongoose.Types.ObjectId(req.user._id),
+                
+    //         })
+    
+    //         if(!project){
+    //             throw new ApiError(401, "Projeect not found ")
+    //         }
+    
+    //         const givenRole = project?.role
+    
+    //         req.user.role = givenRole
+    
+    //         if(!roles.includes(givenRole)){
+    //             throw new ApiError(403, "YOu do nor have permission to perfom this action. ")
+    //         }
+    
+    // })
