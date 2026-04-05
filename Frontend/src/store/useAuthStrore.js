@@ -13,9 +13,9 @@ export const useAuthStore = create((set) => ({
         set({ isCheckingAuth: true })
         try {
             const res = await axiosInstance.get('/auth/check');
-            console.log("✅ Full response:", res);
-            console.log("✅ Response data:", res.data);
-            console.log("✅ User data:", res.data.user);
+            // console.log("✅ Full response:", res);
+            // console.log("✅ Response data:", res.data);
+            // console.log("✅ User data:", res.data.user);
             
             if (res.data.success && res.data.user) {
                 set({ authUser: res.data.user })
@@ -62,10 +62,10 @@ export const useAuthStore = create((set) => ({
 
             const res = await axiosInstance.post('/auth/login', data);
             
-            console.log("res",res);
-            console.log("res.data",res.data);
-            console.log("res.data.user",res.data.user);
-            console.log("res.data.data", res.data.data);
+            // console.log("res",res);
+            // console.log("res.data",res.data);
+            // console.log("res.data.user",res.data.user);
+            // console.log("res.data.data", res.data.data);
             
             set({ authUser: res.data.user || res.data.data})
             toast.success(res.data.message);

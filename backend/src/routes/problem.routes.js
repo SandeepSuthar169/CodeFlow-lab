@@ -14,7 +14,7 @@ const router = Router()
 
 router.post("/create-problem", verifyJWT, checkAdmin, createProblem)
 router.get("/get-problem/:id", verifyJWT, getProblemById)
-router.get("/get-all-prblems", verifyJWT, getAllProblems)
+router.get("/get-all-problem", verifyJWT, getAllProblems)
 router.put("/update-problem/:id", verifyJWT, checkAdmin, updateProblem)
 router.delete("/delete-problem/:id", verifyJWT, checkAdmin, deleteProblem)
 router.get("/get-solved-problem", verifyJWT, getAllProblemsSolvedByUser)
