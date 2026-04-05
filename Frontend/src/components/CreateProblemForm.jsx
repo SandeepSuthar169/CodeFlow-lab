@@ -563,9 +563,14 @@ const CreateProblemForm = () => {
       setIsLoading(true)
 
       const res = await axiosInstance.post("/problem/create-problem", data)
+      toast.success(res.data.message || "Problem Created successfully ⚡")
+      console.log(res);
+      
 
     } catch (error) {
-      
+      toast.error("Error creating problem")
+    } finally {
+      setIsLoading(false);
     }
   }
 
