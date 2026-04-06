@@ -15,7 +15,7 @@ const HomePage = () => {
 
   console.log('problems',problems);
   // console.log('getAllProblem',getAllProblem);
-  console.log('isProblemsLoading',isProblemsLoading);
+  console.log('isProblemLoading',isProblemLoading);
   
 
   useEffect(() => {
