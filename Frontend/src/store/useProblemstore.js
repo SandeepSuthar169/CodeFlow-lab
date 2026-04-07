@@ -16,9 +16,9 @@ export const useProblemStore = create((set) => ({
 
             const res = await axiosInstance.get("/problem/get-all-problem")
 
-            console.log("res", res);
-            console.log("res.data", res.data);
-            console.log("res.data.data", res.data.data);
+            // console.log("res", res);
+            // console.log("res.data", res.data);
+            // console.log("res.data.data", res.data.data);
             // console.log("res.data.problems", res.data.problem);
             
             set({ problems: res.data.data })
@@ -58,9 +58,9 @@ export const useProblemStore = create((set) => ({
         try {
             const res = await axiosInstance.get("/get-solved-problem")
 
-            console.log("res", res);
-            console.log("res.data", res.data);
-            console.log("res.data.problems", res.data.problems);
+            // console.log("res", res);
+            // console.log("res.data", res.data);
+            // console.log("res.data.problems", res.data.problems);
 
             set({ solvedProblem: res.data.problems })
             toast.success(res.data.message)

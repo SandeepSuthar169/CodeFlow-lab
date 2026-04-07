@@ -272,25 +272,25 @@ const deleteProblem = async (req, res) => {
 // GET /api/v1/problems/solved   — all problems solved by the logged-in user
 const getAllProblemsSolvedByUser = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const problems = await Problem.find({
+      "solvedBy.userId": req.user.id
+    }).select({
+      title: 1,
+      difficulty: 1,
+      tags: 1,
+      solvedBy: {
+        $elemMatch: { userId: req.user.id }
+      }
+    });
 
-    const solvedProblems = await Problem.find({
-      solvedBy: userId,      // matches solvedBy ref in your schema
-    }).select("title difficulty tags createdAt");  // return only useful fields
-
-    return res.status(200).json({
+    res.status(200).json({
       success: true,
-      message: "Solved problems fetched successfully.",
-      count: solvedProblems.length,
-      data: solvedProblems,
+      message: "Problems fetched successfully",
+      problems,
     });
-
   } catch (error) {
-    console.error("getAllProblemsSolvedByUser error:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error.",
-    });
+    console.error("Error fetching problems:", error);
+    res.status(500).json({ error: "Failed to fetch problems" });
   }
 };
 
