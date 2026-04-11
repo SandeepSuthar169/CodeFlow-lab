@@ -41,10 +41,10 @@ const ProblemTablem = ({ problems }) => {
 
   
   const itemsPerpage = 5;
-  console.log("itemsPerpage", itemsPerpage);
+  // console.log("itemsPerpage", itemsPerpage);
   
   const totalPages = Math.ceil(filteredProblems.length / itemsPerpage)
-  console.log("totalPages", totalPages);
+  // console.log("totalPages", totalPages);
   
   
   const paginatedProblems = useMemo(() => {
@@ -54,7 +54,7 @@ const ProblemTablem = ({ problems }) => {
     );
   }, [filteredProblems, currenctPage]);
 
-  console.log("paginatedProblems", paginatedProblems );
+  // console.log("paginatedProblems", paginatedProblems );
   
 
 
@@ -132,17 +132,17 @@ const ProblemTablem = ({ problems }) => {
                         );                        
 
 
-                        console.log("isSolved", isSolved);
-                        console.log("solvedBy array:", problem.solvedBy);
+                        // console.log("isSolved", isSolved);
+                        // console.log("solvedBy array:", problem.solvedBy);
 
-                        console.log("problem", problem);
-                        console.log("problemId", problem?._id);
-                        console.log("authUser", authUser?._id);
-                        // console.log("authUser-Id",authUser?._id);
-                        // console.log("authUser", user.userId?.toString());
+                        // console.log("problem", problem);
+                        // console.log("problemId", problem?._id);
+                        // console.log("authUser", authUser?._id);
+                        // // console.log("authUser-Id",authUser?._id);
+                        // // console.log("authUser", user.userId?.toString());
                         
-                        console.log("paginatedProblems", paginatedProblems);
-                        console.log("paginatedProblems.length", paginatedProblems.length);
+                        // console.log("paginatedProblems", paginatedProblems);
+                        // console.log("paginatedProblems.length", paginatedProblems.length);
                         
                         
                         return (

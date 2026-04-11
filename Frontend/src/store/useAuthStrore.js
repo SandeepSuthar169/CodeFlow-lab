@@ -37,10 +37,10 @@ export const useAuthStore = create((set) => ({
 
             const res = await axiosInstance.post('/auth/register', data);
 
-            console.log("res",res);
-            console.log("res.data",res.data);
-            console.log("res.data.user",res.data.user);
-            console.log("res.data.data", res.data.data);
+            // console.log("res",res);
+            // console.log("res.data",res.data);
+            // console.log("res.data.user",res.data.user);
+            // console.log("res.data.data", res.data.data);
             
             set({ authUser: res.data.user || res.data.data})
             toast.success(res.data.message);

@@ -19,7 +19,7 @@ export const useProblemStore = create((set) => ({
             // console.log("res", res);
             // console.log("res.data", res.data);
             // console.log("res.data.data", res.data.data);
-            // console.log("res.data.problems", res.data.problem);
+            // console.log("res.data.data", res.data.data);
             
             set({ problems: res.data.data })
 
@@ -33,18 +33,19 @@ export const useProblemStore = create((set) => ({
     
     },
 
-    getProblemById: async () => {
+    getProblemById: async (id) => {
         try {
             set({ isProblemLoading: true })
 
             const res = await axiosInstance.get(`/problem/get-problem/${id}`)
 
 
-            console.log("res", res);
-            console.log("res.data", res.data);
-            console.log("res.data.problems", res.data.problems);
+            // console.log("res", res);
+            // console.log("res.data", res.data);
+            // console.log("res.data.data", res.data.data);
+            // console.log("res.data.problem", res.data.problem);
 
-            set({ problem: res.data.problems })
+            set({ problem: res.data.data })
             toast.success(res.data.message)
         } catch (error) {
             console.log("Error getting  problem", error);
@@ -58,8 +59,8 @@ export const useProblemStore = create((set) => ({
         try {
             const res = await axiosInstance.get("/get-solved-problem")
 
-            // console.log("res", res);
-            // console.log("res.data", res.data);
+            console.log("res", res);
+            console.log("res.data", res.data);
             // console.log("res.data.problems", res.data.problems);
 
             set({ solvedProblem: res.data.problems })
