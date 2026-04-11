@@ -40,9 +40,9 @@ export const useProblemStore = create((set) => ({
             const res = await axiosInstance.get(`/problem/get-problem/${id}`)
 
 
-            // console.log("res", res);
-            // console.log("res.data", res.data);
-            // console.log("res.data.problems", res.data.problems);
+            console.log("res", res);
+            console.log("res.data", res.data);
+            console.log("res.data.problems", res.data.problems);
 
             set({ problem: res.data.problems })
             toast.success(res.data.message)

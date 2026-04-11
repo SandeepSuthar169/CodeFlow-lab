@@ -16,7 +16,7 @@ const ProblemTablem = ({ problems }) => {
     const difficulties = ["EASY", "MEDIUM", "HARD"];
 
     const handleDelete = (id) => {
-
+      
     }
 
     const handleAddToPlaylist = (id) => {}
@@ -136,7 +136,8 @@ const ProblemTablem = ({ problems }) => {
                         console.log("solvedBy array:", problem.solvedBy);
 
                         console.log("problem", problem);
-                        console.log("authUser", authUser?.id);
+                        console.log("problemId", problem?._id);
+                        console.log("authUser", authUser?._id);
                         // console.log("authUser-Id",authUser?._id);
                         // console.log("authUser", user.userId?.toString());
                         
@@ -145,7 +146,7 @@ const ProblemTablem = ({ problems }) => {
                         
                         
                         return (
-                          <tr key={problem.id}>
+                          <tr key={problem._id}>
                             <td>
                               <input
                                 type="checkbox"
@@ -155,7 +156,7 @@ const ProblemTablem = ({ problems }) => {
                               />
                             </td>
                             <td>
-                              <Link to={`/problem/${problem.id}`} className="font-semibold hover:underline">
+                              <Link to={`/problem/${problem._id}`} className="font-semibold hover:underline">
                                 {problem.title}
                               </Link>
                             </td>
