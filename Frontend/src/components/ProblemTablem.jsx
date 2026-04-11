@@ -15,6 +15,12 @@ const ProblemTablem = ({ problems }) => {
 
     const difficulties = ["EASY", "MEDIUM", "HARD"];
 
+    const handleDelete = (id) => {
+
+    }
+
+    const handleAddToPlaylist = (id) => {}
+
     const allTags = useMemo(() => {
         
       if (!Array.isArray(problems)) return [];
@@ -120,10 +126,20 @@ const ProblemTablem = ({ problems }) => {
                   {
                     paginatedProblems.length > 0 ? (
                       paginatedProblems.map((problem) => {
-                        // const isSolved = problem.solvedBy.some(
-                        //   (user) => user.userId === authUser?.id
-                        // );
+
+                        const isSolved = problem.solvedBy?.some(
+                          (user) => user.userId?.toString() === authUser?._id?.toString()
+                        );                        
+
+
+                        console.log("isSolved", isSolved);
+                        console.log("solvedBy array:", problem.solvedBy);
+
                         console.log("problem", problem);
+                        console.log("authUser", authUser?.id);
+                        // console.log("authUser-Id",authUser?._id);
+                        // console.log("authUser", user.userId?.toString());
+                        
                         console.log("paginatedProblems", paginatedProblems);
                         console.log("paginatedProblems.length", paginatedProblems.length);
                         
@@ -131,12 +147,12 @@ const ProblemTablem = ({ problems }) => {
                         return (
                           <tr key={problem.id}>
                             <td>
-                              {/* <input
+                              <input
                                 type="checkbox"
                                 checked={isSolved}
                                 readOnly
                                 className="checkbox checkbox-sm"
-                              /> */}
+                              />
                             </td>
                             <td>
                               <Link to={`/problem/${problem.id}`} className="font-semibold hover:underline">
@@ -170,7 +186,7 @@ const ProblemTablem = ({ problems }) => {
                             </td>
                             <td>
                               <div className="flex flex-col md:flex-row gap-2 items-start md:items-center">
-                                {authUser?.role === "ADMIN" && (
+                                {authUser?.role === "admin" && (
                                   <div className="flex gap-2">
                                     <button
                                       onClick={() => handleDelete(problem.id)}
@@ -196,13 +212,38 @@ const ProblemTablem = ({ problems }) => {
                         );
                       })
                     ) : (
-                      <h1>hohoh</h1>
+                      <tr>
+                        <td caLSpan={5} className="text-center py-6 text-gray-600">
+                          No Problem Found.
+                        </td>
+                      </tr>
                     )
                   }
               </tbody>
           </table>
       </div>
 
+      {/*  */}
+      <div className="flex justify-center mt-6 gap-2">
+        <button
+          className="btn btn-sm"
+          disabled={currenctPage === 1}
+          onClick={() => setCurrenctPage((prev) => prev - 1)}
+        >
+          Prev
+        </button>
+        <span className="btn btn-ghost btn-sm">
+            {currenctPage} / {totalPages}
+        </span>
+        <button
+          className="btn btn-sm"
+          disabled={currenctPage === totalPages}
+          onClick={() => setCurrenctPage((prev) => prev + 1)}
+        >
+          Next
+        </button>
+        
+      </div>
 
 
     </div>
