@@ -121,6 +121,107 @@ const ProblemPage = () => {
         </div>
         </nav>
 
+        <div className="container mx-auto p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="card bg-base-100 shadow-xl">
+            <div className="card-body p-0">
+              <div className="tabs tabs-bordered">
+                <button
+                  className={`tab gap-2 ${
+                    activeTab === "description" ? "tab-active" : ""
+                  }`}
+                  onClick={() => setActiveTab("description")}
+                >
+                  <FileText className="w-4 h-4" />
+                  Description
+                </button>
+                <button
+                  className={`tab gap-2 ${
+                    activeTab === "submissions" ? "tab-active" : ""
+                  }`}
+                  onClick={() => setActiveTab("submissions")}
+                >
+                  <Code2 className="w-4 h-4" />
+                  Submissions
+                </button>
+                <button
+                  className={`tab gap-2 ${
+                    activeTab === "discussion" ? "tab-active" : ""
+                  }`}
+                  onClick={() => setActiveTab("discussion")}
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Discussion
+                </button>
+                <button
+                  className={`tab gap-2 ${
+                    activeTab === "hints" ? "tab-active" : ""
+                  }`}
+                  onClick={() => setActiveTab("hints")}
+                >
+                  <Lightbulb className="w-4 h-4" />
+                  Hints
+                </button>
+              </div>
+
+              {/* <div className="p-6">
+                {renderTabContent()}
+              </div> */}
+            </div>
+          </div>
+          </div>
+        </div>
+        
+        <div className="card bg-base-100 shadow-xl">
+            <div className="card-body p-0">
+              <div className="tabs tabs-bordered">
+                <button className="tab tab-active gap-2">
+                  <Terminal className="w-4 h-4" />
+                  Code Editor
+                </button>
+              </div>
+            </div>
+
+            <div className="h-150 w-full">
+                <Editor
+                  height="100%"
+                  language={selectedLanguage.toLowerCase()}
+                  theme="vs-dark"
+                  // value={code}                                // proplem
+                  onChange={(value) => setCode(value || "")}
+                  options={{
+                    minimap: { enabled: false },
+                    fontSize: 20,
+                    lineNumbers: "on",
+                    roundedSelection: false,
+                    scrollBeyondLastLine: false,
+                    readOnly: false,
+                    automaticLayout: true,
+                  }}
+                />
+              </div>
+
+
+              <div className="p-4 border-t border-base-300 bg-base-200">
+                <div className="flex justify-between items-center">
+                  <button
+                    // className={`btn btn-primary gap-2 ${
+                    //   isExecuting ? "loading" : ""
+                    // }`}
+                    // onClick={handleRunCode}
+                    // disabled={isExecuting}
+                  >
+                    {/* {!isExecuting && <Play className="w-4 h-4" />} */}
+                    Run Code
+                  </button>
+                  <button className="btn btn-success gap-2">
+                    Submit Solution
+                  </button>
+                </div>
+              </div>
+        </div>
+
+
      </div>
   );
 }

@@ -15,9 +15,7 @@ const ProblemTablem = ({ problems }) => {
 
     const difficulties = ["EASY", "MEDIUM", "HARD"];
 
-    const handleDelete = (id) => {
-      
-    }
+    const handleDelete = (id) => {}
 
     const handleAddToPlaylist = (id) => {}
 
