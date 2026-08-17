@@ -1,14 +1,17 @@
 import LougoutButton from "@/components/logout-button";
 import { Button } from "@/components/ui/button";
 import { requireAuth } from "@/lib/auth-guard";
+import { onBoardUser } from "@/module/auth/actions";
 import Image from "next/image";
 
 
  async function  Home() {
 
-  const session = await requireAuth()
+  // const session = await requireAuth()
   
-  const { user } = session
+  // const { user } = session
+
+  await onBoardUser()
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
