@@ -12,7 +12,7 @@ const LogoutButton = () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          
+
           router.push("/login")
         },
       },
@@ -21,8 +21,11 @@ const LogoutButton = () => {
 
   return (
     <div>
-      <Button onClick={onLogout}>
-        LOGOUT
+      <Button
+        onClick={onLogout}
+        // className="text-gray-100 rounded-2xl  "
+      >
+        Logout
       </Button>
     </div>
   )

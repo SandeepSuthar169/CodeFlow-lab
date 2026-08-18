@@ -22,7 +22,7 @@ import Image from "next/image";
         className="h-screen w-50 object-center  "
 
       /> */}
-      <LougoutButton />
+      {/* <LougoutButton /> */}
     </div>
   );
 }
