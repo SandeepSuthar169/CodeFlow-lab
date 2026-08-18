@@ -5,7 +5,8 @@ import { headers } from 'next/headers'
 import { auth } from '@/lib/auth'
 import logo from '@/app/favicon.ico'
 import { Button } from '@/components/ui/button'
-import LogoutButton from '@/components/logout-button'
+// import LogoutButton from '@/components/logout-button'
+import { ModeToggle } from '@/components/mode-toggle'
 
 export const Navbar = async ({ userRole }: { userRole?: { role?: UserRole } }) => {
     const session = await auth.api.getSession({
@@ -16,7 +17,7 @@ export const Navbar = async ({ userRole }: { userRole?: { role?: UserRole } }) =
 
     return (
         <nav className="fixed top-4 left-1/2 z-50 w-full max-w-5xl -translate-x-1/2 px-4">
-            <div className="rounded-2xl border border-white/20 bg-white/10 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-black/10 dark:shadow-black/20 dark:hover:bg-black/15">
+            <div className="rounded-md border border-white/20 bg-white/10 shadow-lg shadow-black/5 backdrop-blur-md transition-all duration-200 hover:bg-white/15 dark:border-white/10 dark:bg-black/10 dark:shadow-black/20 dark:hover:bg-black/15">
                 <div className="flex items-center justify-between px-6 py-4">
 
                     <Link href="/" className="flex items-center gap-2">
@@ -79,6 +80,8 @@ export const Navbar = async ({ userRole }: { userRole?: { role?: UserRole } }) =
                                         className="h-auto rounded-full"
                                     />
                                 </Link>
+                                <ModeToggle />
+
                                 {/* <LogoutButton /> */}
                             </>
                         ) : (
