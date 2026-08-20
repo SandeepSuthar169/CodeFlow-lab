@@ -73,16 +73,17 @@ export const currentUserRole = async () => {
             };
         }
 
-        const user = await prisma.user.findUnique({
+        const userRole = await prisma.user.findUnique({
             where: {
                 id: session.user.id,
             },
             select: {
+                id: true,
                 role: true,
             },
         });
 
-        if (!user) {
+        if (!userRole) {
             return {
                 success: false,
                 error: "User not found",
@@ -91,7 +92,7 @@ export const currentUserRole = async () => {
 
         return {
             success: true,
-            role: user.role,
+            role: userRole.role,
         };
     } catch (error) {
         console.error("❌ Error fetching user role:", error);
@@ -104,45 +105,40 @@ export const currentUserRole = async () => {
 };
 
 
-// export const getCurrentUserData = async () => {
-//   try {
-//     const session = await getAuthenticatedSession();
-//
-//     if (!session) {
-//       return {
-//         success: false,
-//         error: "No authenticated user found",
-//       };
-//     }
-//
-//     const data = await prisma.user.findUnique({
-//       where: {
-//         id: session.user.id,
-//       },
-//       include: {
-//         submissions: true,
-//         solvedProblems: true,
-//         playlists: true,
-//       },
-//     });
-//
-//     if (!data) {
-//       return {
-//         success: false,
-//         error: "User not found",
-//       };
-//     }
-//
-//     return {
-//       success: true,
-//       data,
-//     };
-//   } catch (error) {
-//     console.error("❌ Error fetching user:", error);
-//
-//     return {
-//       success: false,
-//       error: "Failed to fetch user",
-//     };
-//   }
-// };
+export const getCurrentUserData = async () => {
+    try {
+        const session = await getAuthenticatedSession();
+
+        if (!session) {
+            return {
+                success: false,
+                error: "No authenticated user found",
+            };
+        }
+
+        const data = await prisma.user.findUnique({
+            where: {
+                id: session.user.id,
+            },
+        });
+
+        if (!data) {
+            return {
+                success: false,
+                error: "User not found",
+            };
+        }
+
+        return {
+            success: true,
+            data,
+        };
+    } catch (error) {
+        console.error("❌ Error fetching user:", error);
+
+        return {
+            success: false,
+            error: "Failed to fetch user",
+        };
+    }
+};
