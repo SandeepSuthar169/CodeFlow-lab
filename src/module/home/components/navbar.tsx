@@ -68,8 +68,7 @@ export const Navbar = async ({ userRole }: { userRole?: { role?: UserRole } }) =
                                         </Button>
                                     </Link>
                                 )}
-
-
+                                <ModeToggle />
 
                                 <Link href="/profile">
                                     <Image
@@ -80,7 +79,6 @@ export const Navbar = async ({ userRole }: { userRole?: { role?: UserRole } }) =
                                         className="h-auto rounded-full"
                                     />
                                 </Link>
-                                <ModeToggle />
 
                                 {/* <LogoutButton /> */}
                             </>
